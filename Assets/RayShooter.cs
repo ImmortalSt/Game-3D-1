@@ -30,7 +30,7 @@ public class RayShooter : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                //StartCoroutine (SphereIndicator(hit.point));
+                StartCoroutine (SphereIndicator(hit.point));
                 Character enemy = hit.collider.GetComponent<Character>();
                 if (enemy != null)
                     enemy.GetDamage(50);
