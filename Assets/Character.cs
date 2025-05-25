@@ -1,15 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Character : MonoBehaviour
 {
     public float HP = 100f;
     private bool isDead = false;
+    public GameObject gameOverPanel;
+    public GameObject Camera;
 
-    void Update()
-    {
-        GetDamage(10 * Time.deltaTime);
+    private IEnumerator Die()
+    { 
+        this.transform.Rotate(-75, 0, 0); 
+        yield return new WaitForSeconds(1.5f);
+        if (Camera != null)
+        {
+            Camera.transform.parent = null;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        Destroy(this.gameObject);
     }
 
     public void GetDamage(float damage)
@@ -21,8 +32,13 @@ public class Character : MonoBehaviour
             isDead = true;
             HP = 0;
             Debug.Log("Character is dead");
-            Destroy(gameObject);
-            Invoke("DestroyCharacter", 0.1f);
+            if(gameOverPanel != null)
+                gameOverPanel.SetActive(true);
+
+            StartCoroutine(Die());
+            
         }
     }
+
+    
 }
