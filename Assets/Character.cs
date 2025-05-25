@@ -11,7 +11,10 @@ public class Character : MonoBehaviour
     public GameObject Camera;
 
     private IEnumerator Die()
-    { 
+    {
+        if (GetComponent<WanderingAI>() is WanderingAI ai)
+            ai.enabled = false;
+
         this.transform.Rotate(-75, 0, 0); 
         yield return new WaitForSeconds(1.5f);
         if (Camera != null)
