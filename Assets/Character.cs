@@ -24,6 +24,9 @@ public class Character : MonoBehaviour
             Cursor.visible = true;
         }
         Destroy(this.gameObject);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
     }
 
     public void GetDamage(float damage)
@@ -43,6 +46,6 @@ public class Character : MonoBehaviour
             
         }
     }
-
     
+
 }
