@@ -28,6 +28,7 @@ public class Character : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        
         if (isDead) return;
         HP -= damage;
         if (HP <= 0)

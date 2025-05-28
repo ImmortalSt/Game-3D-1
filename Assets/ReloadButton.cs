@@ -11,8 +11,15 @@ public class ReloadButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Button button = GetComponent<Button>();
-        button.onClick.AddListener(ReloadGame);
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    ReloadGame();
+        //}
+        //else
+        //{
+            Button button = GetComponent<Button>();
+            button.onClick.AddListener(ReloadGame);
+        //}
     }
 
     private void ReloadGame()
