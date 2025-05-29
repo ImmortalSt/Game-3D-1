@@ -10,10 +10,32 @@ public class Character : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject Camera;
 
+    public void ReactToHit() 
+    { 
+        WanderingAI behavior = GetComponent<WanderingAI>();
+        if (behavior != null) 
+        { 
+            behavior.SetAlive(false);
+        } 
+        StartCoroutine(Die()); 
+    }
+
     private IEnumerator Die()
     {
         if (GetComponent<WanderingAI>() is WanderingAI ai)
             ai.enabled = false;
+
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false;
+        }
+
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.enabled = false;
+        }
 
         this.transform.Rotate(-75, 0, 0); 
         yield return new WaitForSeconds(1.5f);
@@ -30,8 +52,7 @@ public class Character : MonoBehaviour
     }
 
     public void GetDamage(float damage)
-    {
-        
+    {        
         if (isDead) return;
         HP -= damage;
         if (HP <= 0)
