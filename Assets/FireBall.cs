@@ -5,21 +5,25 @@ using UnityEngine;
 public class FireBall : MonoBehaviour
 {
     public float speed = 3.0f;
-    public int damage = 1;
+    public float damage = 20f;
     
     void Update() 
     { 
         transform.Translate(0, 0, speed * Time.deltaTime); 
     }
-    
-    void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider collision)
     {
-        Character player = other.GetComponent <Character>();
-        if (player != null)
-        { 
-            player.GetDamage(damage);
-            Debug.Log("Player hit"); 
+        if (collision != null)
+        {
+            //проверить, что столкнулись с игроком и нанести ему урон
+            Character charater = collision.gameObject.GetComponent<Character>();
+            if (charater != null)
+            {
+                charater.GetDamage(damage);
+            }
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject);
     }
+    
 }

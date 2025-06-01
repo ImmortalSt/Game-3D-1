@@ -25,17 +25,17 @@ public class Character : MonoBehaviour
         if (GetComponent<WanderingAI>() is WanderingAI ai)
             ai.enabled = false;
 
-        Collider[] colliders = GetComponents<Collider>();
-        foreach (Collider collider in colliders)
-        {
-            collider.enabled = false;
-        }
+        //Collider[] colliders = GetComponents<Collider>();
+        //foreach (Collider collider in colliders)
+        //{
+        //    collider.enabled = false;
+        //}
 
-        Renderer renderer = GetComponent<Renderer>();
-        if (renderer != null)
-        {
-            renderer.enabled = false;
-        }
+        //Renderer renderer = GetComponent<Renderer>();
+        //if (renderer != null)
+        //{
+        //    renderer.enabled = false;
+        //}
 
         this.transform.Rotate(-75, 0, 0); 
         yield return new WaitForSeconds(1.5f);
