@@ -26,31 +26,42 @@ public class WanderingAI : MonoBehaviour
 
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
-
-            //if (Physics.SphereCast(ray, 0.75f, out hit))
-            //{
-            //    if (hit.distance < obstacleRange)
-            //    {
-            //        float angle = Random.Range(-110, 110);
-            //        transform.Rotate(0, angle, 0);
-            //    }
-            //}
+                        
             if (Physics.SphereCast(ray, 0.75f, out hit))
             {
-                GameObject hitObject = hit.transform.gameObject; 
-                if (hitObject.GetComponent<Character>()) 
+                NewBehaviourScript playerMove = hit.collider.GetComponent<NewBehaviourScript>(); // MoveRotation - script
+                Character character = hit.collider?.GetComponent<Character>();
+                Apples apple = hit.collider.GetComponent<Apples>();
+
+                if (character != null)
                 {
                     if (_fireball == null)
-                    { 
-                        _fireball = Instantiate(fireballPrefab) as GameObject; 
-                        _fireball.transform.position = transform.TransformPoint(Vector3.forward * 1.5f); 
-                        _fireball.transform.rotation = transform.rotation; 
+                    {
+                        _fireball = Instantiate(fireballPrefab) as GameObject;
+                        _fireball.transform.position = transform.TransformPoint(Vector3.forward * 1.5f);
+                        _fireball.transform.rotation = transform.rotation;
                     }
                 }
-                else if (hit.distance < obstacleRange)
+                else if (hit.distance < obstacleRange) // ближний бой
                 {
-                    float angle = Random.Range(-110, 110);
-                    transform.Rotate(0, angle, 0);
+                    if (character != null && playerMove != null)
+                    {
+                        character.GetDamage(10 * Time.deltaTime);
+                    }
+                    else if (apple != null)
+                    {
+                        // Ћогика взаимодействи€ с €блоком                        
+                        if (character != null)
+                        {
+                            character.RestoreHP(10f);
+                        }
+                        //Debug.Log("Apple detected!");
+                    }
+                    else
+                    {
+                        float angle = Random.Range(-110, 110);
+                        transform.Rotate(0, angle, 0);                    
+                    }
                 }
             }
         }

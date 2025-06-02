@@ -9,34 +9,12 @@ public class Character : MonoBehaviour
     private bool isDead = false;
     public GameObject gameOverPanel;
     public GameObject Camera;
-
-    public void ReactToHit() 
-    { 
-        WanderingAI behavior = GetComponent<WanderingAI>();
-        if (behavior != null) 
-        { 
-            behavior.SetAlive(false);
-        } 
-        StartCoroutine(Die()); 
-    }
-
+        
     private IEnumerator Die()
     {
         if (GetComponent<WanderingAI>() is WanderingAI ai)
             ai.enabled = false;
-
-        //Collider[] colliders = GetComponents<Collider>();
-        //foreach (Collider collider in colliders)
-        //{
-        //    collider.enabled = false;
-        //}
-
-        //Renderer renderer = GetComponent<Renderer>();
-        //if (renderer != null)
-        //{
-        //    renderer.enabled = false;
-        //}
-
+                
         this.transform.Rotate(-75, 0, 0); 
         yield return new WaitForSeconds(1.5f);
         if (Camera != null)
@@ -48,7 +26,6 @@ public class Character : MonoBehaviour
         Destroy(this.gameObject);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
     }
 
     public void GetDamage(float damage)
@@ -64,9 +41,19 @@ public class Character : MonoBehaviour
                 gameOverPanel.SetActive(true);
 
             StartCoroutine(Die());
-            
         }
     }
-    
 
+    public void RestoreHP(float amount)
+    {
+        if (HP < 100)
+        {
+            HP += amount;
+            Debug.Log("HP restored. Current HP: " + HP);
+        }
+        else if (HP == 100) 
+        {
+            Debug.Log("HP not restored. Current HP: " + HP);
+        }
+    }
 }

@@ -17,11 +17,18 @@ public class FireBall : MonoBehaviour
         if (collision != null)
         {
             //проверить, что столкнулись с игроком и нанести ему урон
-            Character charater = collision.gameObject.GetComponent<Character>();
-            if (charater != null)
+            Character character = collision.gameObject.GetComponent<Character>();
+            Apples apple = collision.GetComponent<Apples>();
+
+            if (character != null)
             {
-                charater.GetDamage(damage);
+                character.GetDamage(damage);
             }
+            else if (apple != null)
+            {
+                Destroy(apple.gameObject);
+            }
+
             Destroy(this.gameObject);
         }
     }
