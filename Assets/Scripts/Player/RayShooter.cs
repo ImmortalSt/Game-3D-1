@@ -5,6 +5,8 @@ using UnityEngine;
 public class RayShooter : MonoBehaviour
 {
     private Camera _camera;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitAudioClip;
 
     void Start()
     {
@@ -33,7 +35,10 @@ public class RayShooter : MonoBehaviour
                 StartCoroutine (SphereIndicator(hit.point));
                 Character enemy = hit.collider.GetComponent<Character>();
                 if (enemy != null)
+                {
                     enemy.GetDamage(50);
+                    Managers.AudioManager.PlaySound(hitAudioClip);
+                }
             }
         }
         
