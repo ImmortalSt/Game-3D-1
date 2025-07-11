@@ -23,9 +23,18 @@ public class Character : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        // Увеличиваем счетчик уничтоженных врагов
+        if (Managers.InventoryManager != null)
+        {
+            Managers.InventoryManager.DestroyOpponent();
+        }
+
         Destroy(this.gameObject);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+
     }
 
     public void GetDamage(float damage)
